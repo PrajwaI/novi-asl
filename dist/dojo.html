@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="theme-color" content="#0e191f"><meta name="description" content="Learn the ASL alphabet through guided lessons and private webcam practice.">
+ <title>Novi ASL | Practice Studio</title>
+ <link rel="icon" href="assets/novi-mark.svg" type="image/svg+xml">
+ <link rel="stylesheet" href="styles.css">
+ <link rel="stylesheet" href="dojo-theme.css">
+</head>
+<body>
+ <a class="skip-link" href="#main">Skip to main content</a>
+ <header class="site-header"><div class="header-inner">
+  <a class="brand" href="index.html" aria-label="Novi ASL home"><span class="brand-mark" data-icon="hand"></span>novi<span class="brand-dot">.</span></a>
+  <nav aria-label="Main navigation">
+   <a href="#learn" data-route="learn" class="active"><span data-icon="book"></span>Learn</a>
+   <a href="#practice" data-route="practice"><span data-icon="shuffle"></span>Practice</a>
+   <a href="#words" data-route="words"><span data-icon="words"></span>Word studio</a>
+   <a href="#progress" data-route="progress"><span data-icon="chart"></span>My progress</a>
+  </nav>
+  <div class="header-right"><a class="dojo-home-link" href="index.html">← NOVI ASL</a><button class="avatar" id="help-button" aria-label="Open getting started guide">N</button></div>
+ </div></header>
+ <main id="main" class="main-shell">
+  <section class="welcome" id="welcome" hidden><div><div class="eyebrow"><span class="tiny-line"></span> A LITTLE PRACTICE. A WORLD OF CONNECTION.</div><h1 id="page-title">Your hands. <span>A whole new language.</span></h1><p id="page-description">Learn the ASL alphabet at your own pace. Let’s make your first sign.</p></div>
+   <div class="daily-goal"><div class="goal-symbol" data-icon="target"></div><div><span class="small-label">YOUR DAILY MOMENT</span><div class="goal-text"><b id="daily-count">0 of 5</b> signs practiced</div><div class="goal-track"><span id="daily-bar"></span></div></div></div>
+  </section>
+  <section id="workspace-view" hidden>
+   <div class="workspace-toolbar"><div class="section-title"><span class="section-dot"></span><h2 id="workspace-title">Let’s learn the alphabet</h2><span class="soft-badge" id="mode-badge">BEGINNER FRIENDLY</span></div><button class="text-button" id="how-button"><span data-icon="help"></span>How it works</button></div>
+   <section id="word-controls" class="word-controls" hidden><div><label for="word-input">What would you like to spell?</label><form id="word-form"><input id="word-input" value="HELLO" maxlength="16" autocomplete="off" autocapitalize="characters" spellcheck="false" pattern="[A-Za-z]{1,16}" required aria-describedby="word-error"><button class="button small" type="submit">Start word <span data-icon="arrow"></span></button></form><p id="word-error" class="muted">Choose a word using static letters. J and Z are lesson-only.</p></div><div id="word-choices" class="word-choices"></div><div id="word-tiles" class="word-tiles" aria-label="Word spelling progress"></div></section>
+   <div class="learning-grid">
+    <section class="camera-card" aria-label="Live signing practice">
+     <div class="card-heading"><h3><span data-icon="camera"></span>Your practice space</h3><div class="camera-status" id="camera-status"><i></i>Camera off</div></div>
+     <div class="camera-stage" id="camera-stage">
+      <video id="webcam" autoplay muted playsinline aria-label="Your live camera preview"></video><canvas id="landmarks" aria-hidden="true"></canvas>
+      <div class="stage-top"><span class="stage-chip"><span class="stage-indicator"></span>LIVE PRACTICE</span><span class="stage-letter" id="stage-letter">SIGN <b>A</b></span></div>
+      <div class="camera-placeholder" id="camera-placeholder"><div class="hand-orbit"><span data-icon="hand"></span><span class="orbit-spark">✦</span></div><h3>A little wave to get started?</h3><p>Turn on your camera and bring one hand<br>into the frame. The space is yours.</p><button class="button camera-start" id="start-camera"><span data-icon="camera"></span>Enable camera</button><span class="camera-note">You’re in control. No video is recorded.</span></div>
+      <div id="loading-overlay" class="loading-overlay" hidden><span class="spinner"></span><b id="loading-label">Preparing your camera…</b><p>This may take a moment the first time.</p></div>
+      <div class="hand-guide" id="hand-guide" hidden aria-hidden="true"></div>
+      <div class="stage-bottom"><span><span data-icon="shield"></span>Only on your device</span><span id="tracking-label">21-point hand tracking</span></div>
+      <button id="flip-camera" class="stage-control" aria-label="Switch front and rear camera" title="Switch camera" hidden><span data-icon="flip"></span></button>
+     </div>
+     <div class="feedback-panel"><div class="feedback-symbol" id="feedback-symbol" data-icon="hand"></div><div class="feedback-copy" role="status" aria-live="polite"><strong id="feedback-title">Ready when you are</strong><p id="feedback-text">Enable your camera to get real-time feedback on your sign.</p></div><button id="stop-camera" class="icon-button" aria-label="Turn camera off" title="Turn camera off" hidden><span data-icon="pause"></span></button></div>
+     <div class="confidence-row"><div><span class="confidence-dot"></span>Recognition confidence <button id="model-button" class="inline-info" aria-label="About recognition confidence"><span data-icon="info"></span></button></div><strong id="confidence-value">—</strong></div><div class="confidence-track" role="progressbar" aria-label="Recognition confidence" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="confidence-bar"></span><i title="90% confidence required"></i></div>
+    </section>
+    <aside class="lesson-card" aria-label="Selected letter lesson">
+     <div class="lesson-heading"><span id="lesson-number" class="small-label">LETTER 01 / 26</span><span id="lesson-type" class="lesson-type">Static sign</span></div>
+     <div class="sign-display"><span class="letter-watermark" id="letter-watermark" aria-hidden="true">A</span><img id="sign-reference" src="assets/signs/A.svg" alt="ASL letter A handshape" width="170" height="190"><span class="reference-caption">THE SIGN FOR <b id="reference-letter">A</b></span><button id="mirror-reference" class="mirror-reference" aria-label="Mirror the hand reference" title="Mirror the reference"><span data-icon="flip"></span></button></div>
+     <div class="lesson-body"><div class="letter-title"><h2>Letter <span id="lesson-letter">A</span></h2><span id="lesson-completed" class="completion-badge" hidden><span data-icon="check"></span>Learned</span></div><p id="lesson-summary">Make a gentle fist.</p><ol id="lesson-steps"></ol><div class="lesson-tip"><span data-icon="bulb"></span><p id="lesson-tip">Keep it relaxed. A comfortable hand makes a clearer sign.</p></div></div>
+     <div class="lesson-actions"><button class="icon-button" id="previous-letter" aria-label="Previous letter"><span class="back-arrow" data-icon="arrow"></span></button><button class="button next-letter" id="next-letter">Next letter <span data-icon="arrow"></span></button></div>
+    </aside>
+   </div>
+   <div class="practice-strip" id="practice-strip" hidden><div><span data-icon="shuffle"></span><b id="practice-result">One sign at a time.</b><span id="practice-best">Take as long as you need.</span></div><button class="text-button" id="skip-letter">Try another letter <span data-icon="arrow"></span></button></div>
+   <div class="friendly-tip"><span data-icon="sun"></span><p>A brighter space makes a clearer sign. Face a light source and keep your whole hand in view.</p><span class="tip-tag">A LITTLE TIP</span></div>
+   <section class="alphabet-section"><div class="alphabet-heading"><div><h2>Your alphabet, at a glance <span id="alphabet-count">0 / 26</span></h2><p>Pick a letter. Find your rhythm. Every sign is a step forward.</p></div><div class="segmented" role="group" aria-label="Filter alphabet"><button data-filter="all" class="selected" aria-pressed="true">All letters</button><button data-filter="todo" aria-pressed="false">To learn</button><button data-filter="done" aria-pressed="false">Learned</button></div></div><div class="alphabet-grid" id="alphabet-grid"></div><div id="alphabet-empty" class="empty-filter" hidden>No letters here yet. Your next small step is waiting.</div><div class="alphabet-key"><span><i class="key-current"></i>Current letter</span><span><i class="key-done"></i>Learned</span><span><span class="motion-symbol">↝</span>Movement sign · lesson only</span><button class="text-button" id="recognition-details">About live recognition <span data-icon="info"></span></button></div></section>
+  </section>
+  <section id="progress-view" hidden><div class="progress-intro"><span data-icon="spark"></span><h2>Every small sign adds up.</h2><p>Your practice stays in this browser. Come back tomorrow and keep the connection growing.</p></div><div class="stat-grid" id="stat-grid"></div><div class="progress-detail"><h3>The alphabet journey</h3><div id="progress-letters" class="progress-letters"></div><p id="progress-explanation"></p></div><div class="progress-detail"><h3>Your last seven days</h3><div id="week-chart" class="week-chart"></div></div><button class="button" id="continue-learning">Keep learning <span data-icon="arrow"></span></button><button class="text-button reset-progress" id="reset-progress">Reset my progress</button></section>
+  <footer><a class="brand small-brand" href="#learn">novi.</a><p>Small signs. Real progress.</p><button class="text-button" id="privacy-button"><span data-icon="shield"></span>Your camera stays yours</button></footer>
+ </main>
+ <dialog id="info-dialog"><div class="dialog-heading"><span class="dialog-mark" data-icon="hand"></span><button class="icon-button" id="close-dialog" aria-label="Close dialog"><span data-icon="close"></span></button></div><div id="dialog-content"></div><button class="button dialog-done" id="dialog-done">Got it <span data-icon="check"></span></button></dialog>
+ <div id="toast" role="status" class="toast" hidden></div>
+ <script type="module" src="js/app.js"></script>
+</body>
+</html>
