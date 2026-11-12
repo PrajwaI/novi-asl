@@ -1,26 +1,19 @@
 import {ALPHABET, LESSONS} from './lessons.js';
 import {readProgress} from './progress.js';
+import {readAcademy,saveAcademy} from './academy.js';
+import {updateNoriContext} from './nori-context.js';
+import './nori.js';
 
 const $ = id => document.getElementById(id);
 const STORAGE_KEY = 'novi.academy.v1';
 const LEGACY_STORAGE_KEY = 'signly.academy.v1';
 const letters = ALPHABET;
 const letterIndex = letter => letters.indexOf(letter);
-function loadSaved(){
-  try{
-    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY) || '{}');
-    return {
-      studied:Array.isArray(data.studied) ? [...new Set(data.studied.filter(l=>letters.includes(l)))] : [],
-      quizCorrect:Number.isSafeInteger(data.quizCorrect) && data.quizCorrect>=0 ? data.quizCorrect : 0,
-      selected:letters.includes(data.selected) ? data.selected : 'A'
-    };
-  }catch{return {studied:[],quizCorrect:0,selected:'A'};}
-}
-const state = loadSaved();
+const state = readAcademy();
 let currentQuestion = null;
 let questionNumber = 0;
 let lastQuestion = null;
-function persist(){try{localStorage.setItem(STORAGE_KEY, JSON.stringify(state));}catch{}}
+function persist(){saveAcademy(state);updateNoriContext({academy:state});}
 function recognized(){return readProgress().completed.filter(l=>letters.includes(l));}
 function studiedLetters(){return new Set([...state.studied,...recognized()]);}
 function renderProgress(){
@@ -54,6 +47,7 @@ function renderGrid(){
 function selectLetter(letter,scroll=false){
   if(!letters.includes(letter))return;
   state.selected=letter;persist();renderGrid();
+  updateNoriContext({page:'home',route:location.hash.slice(1)||'alphabet',letter,progress:readProgress()});
   const lesson=LESSONS[letter];
   $('lesson-index').textContent=`${String(letterIndex(letter)+1).padStart(2,'0')} / 26`;
   $('lesson-letter-bg').textContent=letter;
@@ -125,7 +119,9 @@ $('quiz-options').addEventListener('click',e=>{
     if(option.dataset.answer===currentQuestion.answer)option.classList.add('correct');
     else if(option===button)option.classList.add('wrong');
   }
-  if(correct){state.quizCorrect++;persist();renderProgress();}
+  state.quizAttempts++;if(correct){state.quizCorrect++;state.trackedQuizCorrect++;}
+  state.quizHistory.push({letter:currentQuestion.answer,correct,at:new Date().toISOString()});
+  state.quizHistory=state.quizHistory.slice(-100);persist();renderProgress();
   $('quiz-feedback').classList.add(correct?'good':'bad');
   $('quiz-feedback').textContent=correct?`That's right! ${currentQuestion.answer} is the correct sign.`:`Not quite. That handshape is ${currentQuestion.answer}. ${LESSONS[currentQuestion.answer].title}`;
   $('quiz-next').hidden=false;
@@ -142,8 +138,11 @@ $('primary-nav').addEventListener('click',e=>{
   }
 });
 window.addEventListener('storage',e=>{
-  if(!e.key||e.key===STORAGE_KEY){Object.assign(state,loadSaved());selectLetter(state.selected);}
+  if(!e.key||e.key===STORAGE_KEY||e.key===LEGACY_STORAGE_KEY){Object.assign(state,readAcademy());selectLetter(state.selected);}
   if(!e.key||e.key==='signly.progress.v1'){renderGrid();selectLetter(state.selected);}
   renderProgress();
 });
 renderProgress();selectLetter(state.selected);nextQuestion();
+window.addEventListener('hashchange',()=>updateNoriContext({route:location.hash.slice(1)||'alphabet'}));
+const requestedLetter=new URLSearchParams(location.search).get('letter')?.toUpperCase();
+if(letters.includes(requestedLetter))selectLetter(requestedLetter);

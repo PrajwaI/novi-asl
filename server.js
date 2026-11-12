@@ -1,6 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const {createNoriHandler} = require('./lib/nori-server.cjs');
 
 const port = Number(process.env.PORT) || 8000;
 const root = path.join(__dirname, "dist");
@@ -17,8 +18,14 @@ const mimeTypes = {
   ".woff2": "font/woff2"
 };
 
-http.createServer((request, response) => {
-  const pathname = decodeURIComponent(new URL(request.url, `http://${request.headers.host}`).pathname);
+async function createServer(options={}) {
+ const {LESSONS}=await import('./dist/js/lessons.js');
+ const nori=createNoriHandler({lessons:LESSONS,...options});
+ return http.createServer(async (request, response) => {
+  let pathname;
+  try {pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);}catch {response.writeHead(400).end('Bad request');return;}
+  if(await nori(request,response,pathname))return;
+  if(!['GET','HEAD'].includes(request.method)){response.writeHead(405).end('Method not allowed');return;}
   const requestedPath = pathname === "/" ? "/index.html" : pathname;
   const filePath = path.resolve(root, `.${requestedPath}`);
 
@@ -37,8 +44,11 @@ http.createServer((request, response) => {
       "Content-Type": mimeTypes[path.extname(filePath).toLowerCase()] || "application/octet-stream",
       "Cache-Control": "no-cache"
     });
-    response.end(data);
+    response.end(request.method==='HEAD'?undefined:data);
   });
-}).listen(port, "127.0.0.1", () => {
-  console.log(`Novi ASL is running at http://localhost:${port}`);
-});
+ });
+}
+if(require.main===module)createServer().then(server=>server.on('error',error=>{console.error(`Novi server: ${error.message}. If the port is busy, stop your earlier Novi server or set PORT.`);process.exitCode=1;}).listen(port,process.env.HOST||'127.0.0.1',()=>{
+ console.log(`Novi ASL is running at http://localhost:${port}`);
+})).catch(error=>{console.error(error.message);process.exitCode=1;});
+module.exports={createServer};

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <title>Nori, a little firefly</title>
+  <g id="nori-firefly">
+    <ellipse cx="50" cy="81" rx="25" ry="7" fill="#86cbb9" opacity=".09"/>
+    <ellipse cx="50" cy="62" rx="34" ry="30" fill="#b4e2d1" opacity=".06"/>
+    <path d="M40 46C12 20 8 61 32 65L44 60M60 46C88 20 92 61 68 65L56 60" fill="#b4e2d1" fill-opacity=".48" stroke="#a8dacc" stroke-width="1.5"/>
+    <ellipse cx="50" cy="61" rx="20" ry="24" fill="#246b68" stroke="#86cbb9" stroke-width="1.5"/>
+    <path d="M31 62C34 91 66 91 69 62Q50 71 31 62" fill="#b4e2d1"/>
+    <path d="M35 73Q50 82 65 73" fill="none" stroke="#86cbb9" stroke-width="1.5"/>
+    <path d="M41 29L35 17M59 29L65 17" stroke="#86cbb9" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="34" cy="16" r="3" fill="#f1c7ae"/><circle cx="66" cy="16" r="3" fill="#f1c7ae"/>
+    <ellipse cx="50" cy="41" rx="22" ry="19" fill="#287b76" stroke="#86cbb9" stroke-width="1.5"/>
+    <g style="opacity:var(--nori-open,1)" fill="#0d1b23"><ellipse cx="42" cy="40" rx="2.7" ry="4"/><ellipse cx="58" cy="40" rx="2.7" ry="4"/><circle cx="43" cy="39" r=".9" fill="#f4fbf5"/><circle cx="59" cy="39" r=".9" fill="#f4fbf5"/></g>
+    <g style="opacity:var(--nori-thinking,0)" fill="#0d1b23"><ellipse cx="44" cy="39" rx="2.5" ry="3.5"/><ellipse cx="60" cy="39" rx="2.5" ry="3.5"/><path d="M39 33L45 32" stroke="#0d1b23" stroke-width="1.6" stroke-linecap="round"/><circle cx="78" cy="22" r="2.5" fill="#f1c7ae"/><circle cx="83" cy="14" r="1.6" fill="#b4e2d1"/></g>
+    <path d="M38 40Q42 34 46 40M54 40Q58 34 62 40" style="opacity:var(--nori-happy,0)" fill="none" stroke="#0d1b23" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M38 41Q42 44 46 41M54 41Q58 44 62 41" style="opacity:var(--nori-rest,0)" fill="none" stroke="#0d1b23" stroke-width="2" stroke-linecap="round"/>
+    <ellipse cx="35" cy="46" rx="4" ry="2.3" fill="#f1c7ae" opacity=".55"/><ellipse cx="65" cy="46" rx="4" ry="2.3" fill="#f1c7ae" opacity=".55"/>
+    <path d="M46 49Q50 53 54 49" fill="none" stroke="#0d1b23" stroke-width="1.7" stroke-linecap="round"/>
+  </g>
+</svg>
